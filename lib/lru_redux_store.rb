@@ -7,6 +7,8 @@ loader.setup
 
 require 'active_support/cache'
 
+# An ActiveSupport::Cache::Store implementation backed by sin_lru_redux, an
+# efficient and thread-safe LRU cache. See LruReduxStore::Store.
 module LruReduxStore
 end
 

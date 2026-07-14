@@ -8,11 +8,28 @@ plugins:
 
 AllCops:
   NewCops: enable
-  TargetRubyVersion: 3.2
+  TargetRubyVersion: 3.3
   SuggestExtensions: false
+  Exclude:
+    - bench/**/*
 
 Style/Documentation:
   Enabled: false
 
 Gemspec/DevelopmentDependencies:
   Enabled: false
+
+# One class implements the entire cache store API surface.
+Metrics/ClassLength:
+  Max: 110
+
+# This gem runs outside Rails: no Time.zone is configured, and wall-clock
+# Time.now is what the store and the backing sin_lru_redux cache use.
+Rails/TimeZone:
+  Enabled: false
+
+# ActiveSupport::Cache::Store#fetch takes options as its second positional
+# argument, not a default value, so the Hash#fetch rewrite does not apply.
+Style/RedundantFetchBlock:
+  Exclude:
+    - spec/**/*_spec.rb
