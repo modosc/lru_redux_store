@@ -24,18 +24,12 @@ jobs:
         with:
           ruby-version: ${{ matrix.ruby }}
           bundler-cache: true
-      - uses: actions/cache@v6
-        with:
-          path: vendor/bundle
-          key: ${{ runner.os }}-gems-${{ hashFiles('**/lru_redux_store.gemspec') }}
-          restore-keys: |
-            ${{ runner.os }}-gems-
       - name: Bundle install
         run: |
           bundle install --jobs 4 --retry 3
       - name: Appraisal install
         run: |
-          bundle exec appraisal install
+          bundle exec appraisal ${{ matrix.appraisal }} bundle install
       - name: Run tests
         run: |
           bundle exec appraisal ${{ matrix.appraisal }} rake
@@ -47,12 +41,6 @@ jobs:
         with:
           ruby-version: "4.0" # Not needed with a .ruby-version file
           bundler-cache: true
-      - uses: actions/cache@v6
-        with:
-          path: vendor/bundle
-          key: ${{ runner.os }}-gems-${{ hashFiles('**/lru_redux_store.gemspec') }}
-          restore-keys: |
-            ${{ runner.os }}-gems-
       - name: Bundle install
         run: |
           bundle install --jobs 4 --retry 3
