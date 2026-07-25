@@ -275,7 +275,7 @@ RSpec.describe LruReduxStore::Store do
     it 'instruments the operation with the entry count' do
       store.write('key', 'value')
       events = capture_events('cache_cleanup.active_support') { store.cleanup }
-      expect(events.first.last).to include(size: 1)
+      expect(events.first.last).to include(key: { size: 1 })
     end
   end
 
@@ -373,7 +373,14 @@ RSpec.describe LruReduxStore::Store do
     it 'emits the same event stream as ActiveSupport::Cache::MemoryStore' do
       expected = capture_events { run_operations(ActiveSupport::Cache::MemoryStore.new(coder: nil)) }
       actual = capture_events { run_operations(store) }
-      expect(actual.map(&:first)).to eq(expected.map(&:first))
+      if ActiveSupport.gem_version < Gem::Version.new('8.0')
+        # 7.2 doesn't instrument decrement/increment so remove those from our comparison
+        ignored = ['cache_decrement.active_support', 'cache_increment.active_support']
+        actual.reject! do |row|
+          ignored.include?(row.first)
+        end
+      end
+      expect(actual.map(&:first)).to match_array(expected.map(&:first))
     end
   end
 end

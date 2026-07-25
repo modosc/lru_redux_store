@@ -63,7 +63,7 @@ module LruReduxStore
 
     # Preemptively iterates through all stored keys and removes the ones which have expired.
     def cleanup(_options = nil)
-      _instrument(:cleanup, size: @data.count) do
+      instrument(:cleanup, size: @data.count) do
         synchronize { @data.expire }
       end
     end
@@ -163,7 +163,7 @@ module LruReduxStore
 
     # Modifies the amount of an integer value that is stored in the cache.
     # If the key is not found it is created and set to +amount+.
-    def modify_value(name, amount, **options) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+    def modify_value(name, amount, **options)
       options = merged_options options
       key     = normalize_key name, options
       version = normalize_version name, options

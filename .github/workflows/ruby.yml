@@ -1,0 +1,59 @@
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+# This workflow will download a prebuilt Ruby version, install dependencies and run tests with Rake
+# For more information see: https://github.com/marketplace/actions/setup-ruby-jruby-and-truffleruby
+
+name: Ruby
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        ruby: ["3.3", "3.4", "4.0"]
+        rails: ["rails-7.2", "rails-8.0", "rails-8.1", "rails-edge"]
+    env:
+      MATRIX_RUBY: ${{ matrix.ruby }}
+      MATRIX_RAILS: ${{ matrix.rails }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+          bundler-cache: true
+      - name: Bundle install
+        run: |
+          bundle install --jobs 4 --retry 3
+      - name: Appraisal install
+        run: |
+          bundle exec appraisal "$MATRIX_RAILS" bundle install
+      - name: Run tests
+        run: |
+          bundle exec appraisal "$MATRIX_RAILS" rake spec
+  tests:
+    needs: test
+    if: ${{ always() }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check matrix status
+        if: ${{ needs.test.result != 'success' }}
+        run: exit 1
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "4.0" # Not needed with a .ruby-version file
+          bundler-cache: true
+      - name: Bundle install
+        run: |
+          bundle install --jobs 4 --retry 3
+      - name: Rubocop
+        run: bundle exec rubocop --format github
