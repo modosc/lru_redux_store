@@ -1,4 +1,4 @@
-# LruReduxStore
+# LruReduxStore [![Gem Version](https://badge.fury.io/rb/lru_redux_store.svg)](https://badge.fury.io/rb/lru_redux_store)
 
 This gem provides an [`ActiveSupport::Cache::Store`](https://api.rubyonrails.org/classes/ActiveSupport/Cache/Store.html) implementation backed by [`sin_lru_redux`](https://github.com/cadenza-tech/sin_lru_redux), an "efficient and thread-safe LRU cache". It's a drop-in alternative to `ActiveSupport::Cache::MemoryStore` that's bounded by entry count instead of estimated byte size.
 

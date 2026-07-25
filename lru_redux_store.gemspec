@@ -11,10 +11,8 @@ Gem::Specification.new do |spec|
   spec.email = ['modosc@users.noreply.github.com']
 
   spec.summary = 'An ActiveSupport::Cache::Store backed by sin_lru_redux.'
-  spec.description = 'A bounded, thread-safe, in-memory cache store for Rails. ' \
-                     'Backed by sin_lru_redux for O(1) LRU eviction with optional TTL, ' \
-                     'it stores raw values with no serialization and emits the same ' \
-                     'interface as ActiveSupport::Cache::Store.'
+  spec.description = "This gem provides an ActiveSupport::Cache::Store implementation backed by sin_lru_redux, an \"efficient and thread-safe LRU cache\". It's a drop-in alternative to ActiveSupport::Cache::MemoryStore that's bounded by entry count instead of estimated byte size."
+
   spec.homepage = 'https://github.com/modosc/lru_redux_store'
   spec.required_ruby_version = '>= 3.3.0'
 
