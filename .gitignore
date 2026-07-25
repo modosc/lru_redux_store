@@ -7,4 +7,4 @@
 /spec/reports/
 /tmp/
 Gemfile.lock
-**/.DS_Store
+.DS_Store
