@@ -38,7 +38,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rspec-rails', '~> 8.0.2'
   spec.add_development_dependency 'rubocop', '~> 1.88.2'
   spec.add_development_dependency 'rubocop-performance', '~> 1.26.0'
-  spec.add_development_dependency 'rubocop-rails', '~> 2.35.5'
+  spec.add_development_dependency 'rubocop-rails', '~> 2.36.0'
   spec.add_development_dependency 'rubocop-rspec', '~> 3.10.2'
   spec.add_dependency 'activesupport', '>= 7.2.0'
   spec.add_dependency 'sin_lru_redux', '>= 2.5.2'
