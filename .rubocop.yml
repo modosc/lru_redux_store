@@ -5,7 +5,6 @@ plugins:
   - rubocop-rails
   - rubocop-performance
   - rubocop-rspec
-  - rubocop-rubycw
 
 AllCops:
   NewCops: enable
@@ -13,6 +12,7 @@ AllCops:
   SuggestExtensions: false
   Exclude:
     - bench/**/*
+    - "vendor/**/*"
 
 Style/Documentation:
   Enabled: false
