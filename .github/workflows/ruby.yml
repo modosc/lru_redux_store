@@ -33,6 +33,14 @@ jobs:
       - name: Run tests
         run: |
           bundle exec appraisal ${{ matrix.appraisal }} rake
+  passing-tests:
+    needs: test
+    if: ${{ always() }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check matrix status
+        if: ${{ needs.test.result != 'success' }}
+        run: exit 1
   lint:
     runs-on: ubuntu-latest
     steps:
