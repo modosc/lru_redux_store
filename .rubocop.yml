@@ -10,6 +10,10 @@ AllCops:
   NewCops: enable
   TargetRubyVersion: 3.3
   SuggestExtensions: false
+  Exclude:
+    - gemfiles/**/*
+    - bin/**/*
+    - vendor/**.*
 
 Gemspec/DevelopmentDependencies:
   Enabled: false
